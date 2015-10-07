@@ -1,20 +1,26 @@
 'use strict'
 const chokidar = require('chokidar')
 var fs = require('fs')
+var path = require('path')
 const socketsConnected = []
 
-module.exports = (port, path) => {
+module.exports = (opts) => {
+  const port = opts.port || 9111
+
   var app = require('http').createServer()
   var io = require('socket.io')(app)
   app.listen(port)
 
-  var watcher = chokidar.watch(path, {
+  var watcher = chokidar.watch(opts.path || '.', {
     ignored: /[\/\\]\./,
     ignoreInitial: true
-  }).on('all', function(event, path) {
-    console.log('File ', path, ' emitted: ' , event)
+  }).on('all', function(event, onPath) {
+    if (opts.relativeTo) {
+      onPath = path.relative(opts.relativeTo, onPath)
+    }
+    console.log('File ', onPath, ' emitted: ' , event)
     socketsConnected.forEach((socket) => {
-      socket.emit(event, path)
+      socket.emit(event, onPath)
     })
   })
   io.on('connection', (socket) => {
