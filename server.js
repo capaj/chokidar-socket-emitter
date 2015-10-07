@@ -18,6 +18,9 @@ module.exports = (opts) => {
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
     }
+    if (path.sep === '\\') {
+      onPath = onPath.replace(/\\/g, '/')
+    }
     console.log('File ', onPath, ' emitted: ' , event)
     socketsConnected.forEach((socket) => {
       socket.emit(event, onPath)

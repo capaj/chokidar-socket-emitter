@@ -1,6 +1,6 @@
 var chokidarEvEmitter = require('../server')
-chokidarEvEmitter({port: 8090, path: './test/test-folder', relativeTo: './test'})
-var socket = require('socket.io-client')('http://localhost:8090')
+chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test'})
+var socket = require('socket.io-client')('http://localhost:7090')
 var fs = require('fs')
 var chai = require('chai')
 var expect = chai.expect
@@ -12,7 +12,7 @@ describe("chokidar-socket-emitter", function () {
     setTimeout(() => {
       fs.writeFile('./test/test-folder/labrat.txt', 'test', (error) => {
         socket.on('change', function(data){
-          expect(data).to.equal(`test-folder${path.sep}labrat.txt`)
+          expect(data).to.equal('test-folder/labrat.txt')
           done()
         });
       })
