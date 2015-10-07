@@ -8,7 +8,7 @@ npm i chokidar-socket-emitter
 
 ## Usage
 ```javascript
-var chokidarEvEmitter = require('../server')
+var chokidarEvEmitter = require('chokidar-socket-emitter')
 chokidarEvEmitter({port: 8090, path: '.'})
 ```
 all options have defaults
