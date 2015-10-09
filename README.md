@@ -1,5 +1,5 @@
 # chokidar-socket-emitter
-a simple chokidar watcher and socket.io which emits file system events to all connected socket.io clients
+a simple chokidar watcher and socket.io server which emits file system events to all connected socket.io clients
 
 ## Install
 ```
