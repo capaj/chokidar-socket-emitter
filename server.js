@@ -1,8 +1,15 @@
 'use strict'
 const chokidar = require('chokidar')
-var fs = require('fs')
-var path = require('path')
+const path = require('path')
 const socketsConnected = []
+let baseURL
+try {
+  const packageJson = require(path.join(path.dirname(require.main.filename), 'package.json'))
+  baseURL = packageJson.jspm.directories.baseURL
+} catch (err) {}
+if (baseURL) {
+  console.log('using baseURL from package.json: ', baseURL)
+}
 
 module.exports = (opts) => {
   const port = opts.port || 9111
@@ -11,17 +18,22 @@ module.exports = (opts) => {
   var io = require('socket.io')(app)
   app.listen(port)
 
-  var watcher = chokidar.watch(opts.path || '.', {
+  let pathToWath = opts.path || baseURL || '.'
+  var watcher = chokidar.watch(pathToWath, {
     ignored: /[\/\\]\./,
     ignoreInitial: true
-  }).on('all', function(event, onPath) {
+  }).on('all', function (event, onPath) {
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
+    } else if (baseURL) {
+      onPath = path.relative(baseURL, onPath)
     }
     if (path.sep === '\\') {
       onPath = onPath.replace(/\\/g, '/')
+    } else {
+
     }
-    console.log('File ', onPath, ' emitted: ' , event)
+    console.log('File ', onPath, ' emitted: ', event)
     socketsConnected.forEach((socket) => {
       socket.emit(event, onPath)
     })
@@ -33,6 +45,15 @@ module.exports = (opts) => {
       socketsConnected.splice(index - 1, 1)
     })
   })
+
+  io.close = (callback) => {
+    watcher.close()
+    console.log('closing chokidar-socket-emitter')
+    socketsConnected.forEach(function (socket) {
+      socket.disconnect()
+    })
+    io.httpServer.close(callback)
+  }
 
   return io
 }
