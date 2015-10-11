@@ -4,8 +4,8 @@ const path = require('path')
 const socketsConnected = []
 let baseURL
 try {
-  const packageJson = require(path.join(path.dirname(require.main.filename), 'package.json'))
-  baseURL = packageJson.jspm.directories.baseURL
+  const pjson = require(path.join(path.dirname(require.main.filename), 'package.json'))
+  baseURL = pjson.jspm.directories.baseURL || pjson.directories.baseURL
 } catch (err) {}
 if (baseURL) {
   console.log('using baseURL from package.json: ', baseURL)
