@@ -9,6 +9,9 @@ npm i chokidar-socket-emitter
 ## Usage
 ```javascript
 var chokidarEvEmitter = require('chokidar-socket-emitter')
+chokidarEvEmitter({port: 8090}) //path is taken from jspm/directories/baseURL or if that is not set up, '.' is used
+//or specify the path
 chokidarEvEmitter({port: 8090, path: '.'})
 ```
-all options have defaults
+
+This was created to work in conjunction with **[jspm-hot-reloader](https://github.com/capaj/jspm-hot-reloader)**
