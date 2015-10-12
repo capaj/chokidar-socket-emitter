@@ -7,10 +7,10 @@ const chai = require('chai')
 const expect = chai.expect
 
 describe('chokidar-socket-emitter', function () {
-  let emitter
+  let chokidarServer
   this.timeout(3000)
   it('should fire a change event when file changes', function (done) {
-    emitter = chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test'})
+    chokidarServer = chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test'})
     var socket = require('socket.io-client')('http://localhost:7090')
     socket.on('change', function (data) {
       expect(data).to.equal('test-folder/labrat.txt')
@@ -24,7 +24,7 @@ describe('chokidar-socket-emitter', function () {
   })
 
   it('shoud respect baseURL in package.json if no path/relativeTo option is specified', function (done) {
-    emitter = chokidarEvEmitter({port: 7091})
+    chokidarServer = chokidarEvEmitter({port: 7091})
     var socket = require('socket.io-client')('http://localhost:7091')
     socket.on('change', function (data) {
       expect(data).to.equal('labrat.txt')
@@ -37,8 +37,14 @@ describe('chokidar-socket-emitter', function () {
     }, 300)
   })
 
+  it('should expose watcher for manual event subscription', function (done) {
+    chokidarServer = chokidarEvEmitter({port: 7090}, done)
+  })
+
   afterEach(function (done) {
-    emitter.close(done)
+    setTimeout(() => {
+      chokidarServer.close(done)
+    }, 1)
   })
 
   after(() => {

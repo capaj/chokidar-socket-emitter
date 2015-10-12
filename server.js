@@ -11,12 +11,12 @@ if (baseURL) {
   console.log('using baseURL from package.json: ', baseURL)
 }
 
-module.exports = (opts) => {
+module.exports = (opts, cb) => {
   const port = opts.port || 9111
 
   var app = require('http').createServer()
   var io = require('socket.io')(app)
-  app.listen(port)
+  app.listen(port, cb)
 
   let pathToWath = opts.path || baseURL || '.'
   var watcher = chokidar.watch(pathToWath, {
@@ -46,14 +46,17 @@ module.exports = (opts) => {
     })
   })
 
-  io.close = (callback) => {
-    watcher.close()
-    console.log('closing chokidar-socket-emitter')
-    socketsConnected.forEach(function (socket) {
-      socket.disconnect()
-    })
-    io.httpServer.close(callback)
+  return {
+    io: io,
+    app: app,
+    watcher: watcher,
+    close: (callback) => {
+      watcher.close()
+      console.log('closing chokidar-socket-emitter')
+      socketsConnected.forEach(function (socket) {
+        socket.disconnect()
+      })
+      io.httpServer.close(callback)
+    }
   }
-
-  return io
 }
