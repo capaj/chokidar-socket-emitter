@@ -12,12 +12,19 @@ if (baseURL) {
 }
 
 module.exports = (opts, cb) => {
-  const port = opts.port || 9111
+  let app = opts.app
+  if (!app) {
+    app = require('http').createServer()
+  }
 
-  var app = require('http').createServer()
   var io = require('socket.io')(app)
-  app.listen(port, cb)
-
+  if (!opts.app) {
+    let port = opts.port || 9111
+    app.listen(port, () => {
+      console.log('chokidar listening on ', port)
+      cb && cb()
+    })
+  }
   let pathToWath = opts.path || baseURL || '.'
   var watcher = chokidar.watch(pathToWath, {
     ignored: /[\/\\]\./,
