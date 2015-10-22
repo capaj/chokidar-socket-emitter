@@ -17,4 +17,12 @@ chokidarEvEmitter({port: 8090, path: '.'})
 require('chokidar-socket-emitter')({app: server})
 ```
 
+## FAQ
+
+#### Does chokidar have problems with watching drives mounted from VMs hosts/network?
+Yes and if you want it to work, use additional opts property to switch to polling mode
+```
+chokidarEvEmitter({port: 8090, path: '.', chokidar: {usePolling: true}})
+```
+
 This was created to work in conjunction with **[jspm-hot-reloader](https://github.com/capaj/jspm-hot-reloader)**
