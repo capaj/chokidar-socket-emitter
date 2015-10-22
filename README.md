@@ -1,5 +1,5 @@
 # chokidar-socket-emitter
-a simple chokidar watcher and socket.io server which emits file system events to all connected socket.io clients
+a simple chokidar watcher and socket.io server which emits file system events to all connected socket.io clients. Primarily it should server as event source for **[jspm-hot-reloader](https://github.com/capaj/jspm-hot-reloader)** but you can use it any other way.
 
 ## Install
 ```
@@ -25,4 +25,3 @@ Yes and if you want it to work, use additional opts property to switch to pollin
 chokidarEvEmitter({port: 8090, path: '.', chokidar: {usePolling: true}})
 ```
 
-This was created to work in conjunction with **[jspm-hot-reloader](https://github.com/capaj/jspm-hot-reloader)**
