@@ -28,7 +28,8 @@ module.exports = (opts, cb) => {
   let pathToWath = opts.path || baseURL || '.'
   var watcher = chokidar.watch(pathToWath, {
     ignored: /[\/\\]\./,
-    ignoreInitial: true
+    ignoreInitial: true,
+    usePolling: true
   }).on('all', function (event, onPath) {
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
