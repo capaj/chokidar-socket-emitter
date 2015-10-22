@@ -26,10 +26,11 @@ module.exports = (opts, cb) => {
     })
   }
   let pathToWath = opts.path || baseURL || '.'
-  var watcher = chokidar.watch(pathToWath, {
+  let chokidarOpts = Object.assign({
     ignored: /[\/\\]\./,
     ignoreInitial: true
-  }).on('all', function (event, onPath) {
+  }, opts.chokidar)
+  var watcher = chokidar.watch(pathToWath, chokidarOpts).on('all', (event, onPath) => {
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
     } else if (baseURL) {
@@ -60,7 +61,7 @@ module.exports = (opts, cb) => {
     close: (callback) => {
       watcher.close()
       console.log('closing chokidar-socket-emitter')
-      socketsConnected.forEach(function (socket) {
+      socketsConnected.forEach((socket) => {
         socket.disconnect()
       })
       io.httpServer.close(callback)
