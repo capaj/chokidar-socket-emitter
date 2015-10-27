@@ -47,10 +47,13 @@ module.exports = (opts, cb) => {
     })
   })
   io.on('connection', (socket) => {
-    console.log('connected')
     let index = socketsConnected.push(socket)
     socket.on('disconnect', () => {
       socketsConnected.splice(index - 1, 1)
+    })
+
+    socket.on('identification', (name) => {
+      console.log('connected client: ', name)
     })
   })
 
