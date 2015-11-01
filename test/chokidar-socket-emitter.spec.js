@@ -13,7 +13,8 @@ describe('chokidar-socket-emitter', function () {
     chokidarServer = chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test'})
     var socket = require('socket.io-client')('http://localhost:7090')
     socket.on('change', function (data) {
-      expect(data).to.equal('test-folder/labrat.txt')
+      expect(data.path).to.equal('test-folder/labrat.txt')
+      expect(data.absolutePath).to.contain('test-folder/labrat.txt')
       done()
     })
     setTimeout(() => {
@@ -27,7 +28,7 @@ describe('chokidar-socket-emitter', function () {
     chokidarServer = chokidarEvEmitter({port: 7091})
     var socket = require('socket.io-client')('http://localhost:7091')
     socket.on('change', function (data) {
-      expect(data).to.equal('labrat.txt')
+      expect(data.path).to.equal('labrat.txt')
       done()
     })
     setTimeout(() => {

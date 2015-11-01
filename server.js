@@ -31,6 +31,7 @@ module.exports = (opts, cb) => {
     ignoreInitial: true
   }, opts.chokidar)
   var watcher = chokidar.watch(pathToWath, chokidarOpts).on('all', (event, onPath) => {
+    let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
     } else if (baseURL) {
@@ -43,7 +44,7 @@ module.exports = (opts, cb) => {
     }
     console.log('File ', onPath, ' emitted: ', event)
     socketsConnected.forEach((socket) => {
-      socket.emit(event, onPath)
+      socket.emit(event, {path: onPath, absolutePath})
     })
   })
   io.on('connection', (socket) => {
