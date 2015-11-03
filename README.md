@@ -13,7 +13,7 @@ chokidarEvEmitter({port: 8090}) //path is taken from jspm/directories/baseURL or
 //or specify the path
 chokidarEvEmitter({port: 8090, path: '.'})
 
-//you can also supply an http server instance, that way it will run withing your server on your own port
+//you can also supply an http server instance, that way it will run within your server, no need for extra port
 require('chokidar-socket-emitter')({app: server})
 ```
 
