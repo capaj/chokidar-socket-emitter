@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/capaj/chokidar-socket-emitter.git"
   },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=4"
+  },
   "author": "capajj@gmail.com",
   "license": "MIT",
   "bugs": {
