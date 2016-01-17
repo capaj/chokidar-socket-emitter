@@ -22,7 +22,7 @@ module.exports = (opts, cb) => {
   if (!opts.app) {
     let port = opts.port || 9111
     app.listen(port, () => {
-      console.log('chokidar listening on ' +  port)
+      console.log('chokidar listening on ' + port)
       cb && cb()
     })
   }
