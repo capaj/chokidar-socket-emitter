@@ -9,8 +9,7 @@ module.exports = (opts, cb) => {
   baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL
   if (baseURL) {
     console.log('using baseURL from package.json: ', baseURL)
-  }
-  else {
+  } else {
     baseURL = '.'
   }
 
