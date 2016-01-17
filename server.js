@@ -4,8 +4,7 @@ const path = require('path')
 const socketsConnected = []
 
 module.exports = (opts, cb) => {
-
-  let baseURL;
+  let baseURL
   const pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
   baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL || '.'
   if (baseURL) {
