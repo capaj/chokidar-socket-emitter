@@ -6,6 +6,15 @@ a simple chokidar watcher and socket.io server which emits file system events to
 npm i chokidar-socket-emitter
 ```
 
+## CLI Usage
+
+```
+npm i -g chokidar-socket-emitter
+chokidar-socket-emitter -l 1234
+```
+
+By default listens on port 5776.
+
 ## Usage
 ```javascript
 var chokidarEvEmitter = require('chokidar-socket-emitter')
