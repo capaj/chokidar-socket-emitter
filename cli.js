@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var chokidarEvEmitter = require('./server.js')
 var program = require('commander')
 var path = require('path')

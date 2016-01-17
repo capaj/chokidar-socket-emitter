@@ -6,9 +6,11 @@ const socketsConnected = []
 module.exports = (opts, cb) => {
   let baseURL
   const pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
-  baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL || '.'
+  baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL
   if (baseURL) {
     console.log('using baseURL from package.json: ', baseURL)
+  } else {
+    baseURL = '.'
   }
 
   let app = opts.app
@@ -20,7 +22,7 @@ module.exports = (opts, cb) => {
   if (!opts.app) {
     let port = opts.port || 9111
     app.listen(port, () => {
-      console.log('chokidar listening on ', port)
+      console.log('chokidar listening on ' +  port)
       cb && cb()
     })
   }
@@ -41,7 +43,7 @@ module.exports = (opts, cb) => {
     } else {
 
     }
-    console.log('File ', onPath, ' emitted: ', event)
+    console.log('File ', onPath, ' emitted: ' + event)
     socketsConnected.forEach((socket) => {
       socket.emit(event, {path: onPath, absolutePath})
     })
@@ -53,7 +55,7 @@ module.exports = (opts, cb) => {
     })
 
     socket.on('identification', (name) => {
-      console.log('connected client: ', name)
+      console.log('connected client: ' + name)
     })
   })
 
