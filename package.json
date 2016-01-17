@@ -3,6 +3,7 @@
   "version": "0.3.1",
   "description": "socket.io server emitting changes on filesystem",
   "main": "server.js",
+  "bin": "cli.js",
   "scripts": {
     "precommit": "npm test",
     "pretest": "node_modules/.bin/standard",
@@ -24,6 +25,7 @@
   "homepage": "https://github.com/capaj/chokidar-socket-emitter#readme",
   "dependencies": {
     "chokidar": "^1.2.0",
+    "commander": "^2.9.0",
     "socket.io": "^1.3.7"
   },
   "devDependencies": {

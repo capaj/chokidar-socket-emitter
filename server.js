@@ -2,16 +2,16 @@
 const chokidar = require('chokidar')
 const path = require('path')
 const socketsConnected = []
-let baseURL
-try {
-  const pjson = require(path.join(path.dirname(require.main.filename), 'package.json'))
-  baseURL = pjson.jspm.directories.baseURL || pjson.directories.baseURL
-} catch (err) {}
-if (baseURL) {
-  console.log('using baseURL from package.json: ', baseURL)
-}
 
 module.exports = (opts, cb) => {
+
+  let baseURL;
+  const pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
+  baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL || '.'
+  if (baseURL) {
+    console.log('using baseURL from package.json: ', baseURL)
+  }
+
   let app = opts.app
   if (!app) {
     app = require('http').createServer()
