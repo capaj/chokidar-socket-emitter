@@ -1,5 +1,5 @@
 # chokidar-socket-emitter
-a simple chokidar watcher and socket.io server which emits file system events to all connected socket.io clients. Primarily it should serve as an event source for **[jspm-hot-reloader](https://github.com/capaj/jspm-hot-reloader)** but you can use it any other way.
+a simple chokidar watcher and socket.io server which emits file system events to all connected socket.io clients. Primarily it should serve as an event source for **[systemjs-hot-reloader](https://github.com/capaj/systemjs-hot-reloader)** but you can use it any other way.
 
 ## Install
 ```
