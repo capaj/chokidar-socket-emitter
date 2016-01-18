@@ -57,6 +57,10 @@ module.exports = (opts, cb) => {
     socket.on('identification', (name) => {
       console.log('connected client: ' + name)
     })
+
+    socket.on('package.json', function (name, fn) {
+      fn(pjson)
+    })
   })
 
   return {

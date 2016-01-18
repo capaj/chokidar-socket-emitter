@@ -48,6 +48,10 @@ describe('chokidar-socket-emitter', function () {
     }, 1)
   })
 
+  it('should respond with package.json when client emits "package.json"', function () {
+
+  })
+
   after(() => {
     fs.writeFileSync('./test/test-folder/labrat.txt', '')
     fs.writeFileSync('./test/nested-baseURL/labrat.txt', '')
