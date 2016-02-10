@@ -28,7 +28,7 @@ module.exports = (opts, cb) => {
   }
   let pathToWath = opts.path || baseURL || '.'
   let chokidarOpts = Object.assign({
-    ignored: [/[\/\\]\./, 'node_modules/**', baseURL + '/jspm_packages/**'],
+    ignored: [/[\/\\]\./, 'node_modules/**', baseURL + '/jspm_packages/**', '.git/**'],
     ignoreInitial: true
   }, opts.chokidar)
   var watcher = chokidar.watch(pathToWath, chokidarOpts).on('all', (event, onPath) => {
