@@ -5,12 +5,15 @@ const socketsConnected = []
 
 module.exports = (opts, cb) => {
   let baseURL
-  const pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
-  baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL
-  if (baseURL) {
-    console.log('using baseURL from package.json: ', baseURL)
-  } else {
-    baseURL = '.'
+  let pjson
+  let error
+  try {
+    pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
+  } catch (err) {
+    error = err
+  }
+  if (!error) {
+    baseURL = pjson.jspm && pjson.jspm.directories && pjson.jspm.directories.baseURL || pjson.directories && pjson.directories.baseURL
   }
 
   let app = opts.app
@@ -22,7 +25,7 @@ module.exports = (opts, cb) => {
   if (!opts.app) {
     let port = opts.port || 9111
     app.listen(port, () => {
-      console.log('chokidar listening on ' + port)
+      console.log('chokidar-socket-emitter listening on ' + port)
       cb && cb()
     })
   }
@@ -31,6 +34,7 @@ module.exports = (opts, cb) => {
     ignored: [/[\/\\]\./, 'node_modules/**', baseURL + '/jspm_packages/**', '.git/**'],
     ignoreInitial: true
   }, opts.chokidar)
+  console.log('chokidar watching ', path.resolve(pathToWath))
   var watcher = chokidar.watch(pathToWath, chokidarOpts).on('all', (event, onPath) => {
     let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
@@ -58,7 +62,7 @@ module.exports = (opts, cb) => {
       console.log('connected client: ' + name)
     })
 
-    socket.on('package.json', function (name, fn) {
+    socket.on('package.json', function (fn) {
       fn(pjson)
     })
   })

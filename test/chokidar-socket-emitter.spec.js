@@ -42,14 +42,19 @@ describe('chokidar-socket-emitter', function () {
     chokidarServer = chokidarEvEmitter({port: 7090}, done)
   })
 
+  it('should respond with package.json when client emits "package.json"', function (done) {
+    chokidarServer = chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test'})
+    var socket = require('socket.io-client')('http://localhost:7090')
+    socket.emit('package.json', function (data) {
+      expect(data.name).to.equal('chokidar-socket-emitter')
+      done()
+    })
+  })
+
   afterEach(function (done) {
     setTimeout(() => {
       chokidarServer.close(done)
-    }, 1)
-  })
-
-  it('should respond with package.json when client emits "package.json"', function () {
-
+    }, 100)
   })
 
   after(() => {
