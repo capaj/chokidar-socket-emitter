@@ -1,6 +1,8 @@
 'use strict'
 const chokidar = require('chokidar')
 const path = require('path')
+const appRoot = require('app-root-path');
+
 const socketsConnected = []
 
 module.exports = (opts, cb) => {
@@ -8,7 +10,7 @@ module.exports = (opts, cb) => {
   let pjson
   let error
   try {
-    pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
+    pjson = require(path.join(opts.dir || path.dirname(appRoot, 'package.json'))
   } catch (err) {
     error = err
   }
