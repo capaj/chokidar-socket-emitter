@@ -3,7 +3,7 @@ a simple chokidar watcher and socket.io server which emits file system events to
 
 ## Install
 ```
-npm i chokidar-socket-emitter
+npm i -D chokidar-socket-emitter
 ```
 
 ## CLI Usage
