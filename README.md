@@ -6,7 +6,7 @@ a simple chokidar watcher and socket.io server which emits file system events to
 npm i chokidar-socket-emitter
 ```
 
-## CLI Usage
+## CLI usage
 
 ```
 npm i -g chokidar-socket-emitter
@@ -15,7 +15,22 @@ chokidar-socket-emitter -l 1234
 
 By default listens on port 5776.
 
-## Usage
+## NPM script usage
+Combined with [browser-sync](https://browsersync.io/):
+
+``` json
+"scripts": {
+  "start": "npm run serve & npm run watch",
+  "serve": "browser-sync start --server --files='**, !jspm_packages, !node_modules'",
+  "watch": "chokidar-socket-emitter"
+},
+```
+Start by running:
+```
+npm start
+```
+
+## Javascript usage
 ```javascript
 var chokidarEvEmitter = require('chokidar-socket-emitter')
 chokidarEvEmitter({port: 8090}) //path is taken from jspm/directories/baseURL or if that is not set up, '.' is used
