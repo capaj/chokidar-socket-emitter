@@ -21,7 +21,7 @@ Combined with [browser-sync](https://browsersync.io/):
 ``` json
 "scripts": {
   "start": "npm run serve & npm run watch",
-  "serve": "browser-sync start --server --files='**, !jspm_packages, !node_modules'",
+  "serve": "browser-sync start --server",
   "watch": "chokidar-socket-emitter"
 },
 ```
