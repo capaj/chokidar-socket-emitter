@@ -29,9 +29,15 @@ module.exports = (opts, cb) => {
       cb && cb()
     })
   }
-  let pathToWatch = opts.path || baseURL || '.'
+  const pathToWatch = opts.path || baseURL || '.'
+  let ignoredPaths = [
+    /[\/\\]\./,
+    'node_modules/**',
+    baseURL + '/jspm_packages/**',
+    '.git/**'
+  ]
   let chokidarOpts = Object.assign({
-    ignored: [/[\/\\]\./, 'node_modules/**', baseURL + '/jspm_packages/**', '.git/**'],
+    ignored: ignoredPaths,
     ignoreInitial: true
   }, opts.chokidar)
   console.log('chokidar watching ', path.resolve(pathToWatch))
@@ -61,10 +67,11 @@ module.exports = (opts, cb) => {
     socket.on('identification', (name) => {
       console.log('connected client: ' + name)
     })
-
-    socket.on('package.json', function (fn) {
-      fn(pjson)
-    })
+    if (pjson) {
+      socket.on('package.json', function (fn) {
+        fn(pjson)
+      })
+    }
   })
 
   return {

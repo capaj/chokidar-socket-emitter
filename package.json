@@ -1,6 +1,6 @@
 {
   "name": "chokidar-socket-emitter",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "socket.io server emitting changes on filesystem",
   "main": "server.js",
   "bin": "cli.js",
