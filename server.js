@@ -29,13 +29,13 @@ module.exports = (opts, cb) => {
       cb && cb()
     })
   }
-  let pathToWath = opts.path || baseURL || '.'
+  let pathToWatch = opts.path || baseURL || '.'
   let chokidarOpts = Object.assign({
     ignored: [/[\/\\]\./, 'node_modules/**', baseURL + '/jspm_packages/**', '.git/**'],
     ignoreInitial: true
   }, opts.chokidar)
-  console.log('chokidar watching ', path.resolve(pathToWath))
-  var watcher = chokidar.watch(pathToWath, chokidarOpts).on('all', (event, onPath) => {
+  console.log('chokidar watching ', path.resolve(pathToWatch))
+  var watcher = chokidar.watch(pathToWatch, chokidarOpts).on('all', (event, onPath) => {
     let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
