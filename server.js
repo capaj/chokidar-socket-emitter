@@ -32,8 +32,10 @@ module.exports = (opts, cb) => {
   const pathToWatch = opts.path || baseURL || '.'
   let ignoredPaths = [
     /[\/\\]\./,
+    // Ignore relative, top-level dotfiles as well (e.g. '.gitignore').
+    /^\.[^\/\\]/,
     'node_modules/**',
-    baseURL + '/jspm_packages/**',
+    (baseURL ? baseURL + '/' : '') + 'jspm_packages/**',
     '.git/**'
   ]
   let chokidarOpts = Object.assign({
