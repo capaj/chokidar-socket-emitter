@@ -15,6 +15,8 @@ var opts = {}
 
 opts.port = program.port || '5776'
 
+opts.path = program.path
+
 opts.dir = program.dir || path.resolve('.')
 
 if (program.poll) {
