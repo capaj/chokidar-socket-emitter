@@ -29,7 +29,7 @@ module.exports = (opts, cb) => {
       cb && cb()
     })
   }
-  const pathToWatch = opts.path || baseURL || '.'
+  const pathToWatch = path.resolve(opts.path || baseURL || '.')
   let ignoredPaths = [
     /[\/\\]\./,
     // Ignore relative, top-level dotfiles as well (e.g. '.gitignore').
@@ -42,8 +42,9 @@ module.exports = (opts, cb) => {
     ignored: ignoredPaths,
     ignoreInitial: true
   }, opts.chokidar)
-  console.log('chokidar watching ', path.resolve(pathToWatch))
-  var watcher = chokidar.watch(pathToWatch, chokidarOpts).on('all', (event, onPath) => {
+
+  console.log('chokidar watching ', pathToWatch)
+  const watcher = chokidar.watch(pathToWatch, chokidarOpts).on('all', (event, onPath) => {
     let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
       onPath = path.relative(opts.relativeTo, onPath)
