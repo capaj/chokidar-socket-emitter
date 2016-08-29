@@ -3,7 +3,7 @@ const chokidar = require('chokidar')
 const path = require('path')
 const socketsConnected = []
 
-module.exports = (opts, cb) => {
+module.exports = (opts={}, cb) => {
   let baseURL
   let pjson
   let error
@@ -23,7 +23,7 @@ module.exports = (opts, cb) => {
 
   var io = require('socket.io')(app)
   if (!opts.app) {
-    let port = opts.port || 9111
+    let port = opts.port || 5776
     app.listen(port, () => {
       console.log('chokidar-socket-emitter listening on ' + port)
       cb && cb()
