@@ -1,4 +1,4 @@
-/*global describe, it, afterEach, after*/
+/* global describe, it, afterEach, after */
 'use strict'
 const chokidarEvEmitter = require('../server')
 
