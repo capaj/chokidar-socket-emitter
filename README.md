@@ -13,6 +13,15 @@ npm i -g chokidar-socket-emitter
 chokidar-socket-emitter -l 1234
 ```
 
+available CLI options:
+```
+-l, --port <n>
+-p, --path <path>
+-d, --dir <n>
+-P, --poll  # use when you have a disk mounted over network for example
+-q, --quiet # don't print out any logs
+```
+
 By default listens on port 5776.
 
 ## NPM script usage
