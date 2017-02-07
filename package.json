@@ -1,6 +1,6 @@
 {
   "name": "chokidar-socket-emitter",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "socket.io server emitting changes on filesystem",
   "main": "server.js",
   "bin": "cli.js",
@@ -24,16 +24,16 @@
   },
   "homepage": "https://github.com/capaj/chokidar-socket-emitter#readme",
   "dependencies": {
-    "chokidar": "^1.6.0",
+    "chokidar": "^1.6.1",
     "commander": "^2.9.0",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.7.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "husky": "^0.11.6",
-    "mocha": "^3.0.0",
+    "husky": "^0.13.1",
+    "mocha": "^3.2.0",
     "socket.io-client": "^1.4.8",
-    "standard": "^7.1.2"
+    "standard": "^8.6.0"
   },
   "jspm": {
     "directories": {

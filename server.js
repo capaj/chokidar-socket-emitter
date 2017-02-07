@@ -3,7 +3,8 @@ const chokidar = require('chokidar')
 const path = require('path')
 const socketsConnected = []
 
-module.exports = (opts={}, cb) => {
+module.exports = (opts, cb) => {
+  opts = opts || {}
   let baseURL
   let pjson
   let error
