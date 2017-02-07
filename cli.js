@@ -9,6 +9,7 @@ program
   .option('-p, --path <path>')
   .option('-d, --dir <n>')
   .option('-P, --poll')
+  .option('-q, --quiet')
   .parse(process.argv)
 
 var opts = {}
@@ -22,5 +23,7 @@ opts.dir = program.dir || path.resolve('.')
 if (program.poll) {
   opts.chokidar = { usePolling: true }
 }
+
+opts.quiet = program.quiet
 
 chokidarEvEmitter(opts)

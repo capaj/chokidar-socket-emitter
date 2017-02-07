@@ -7,6 +7,7 @@ module.exports = (opts, cb) => {
   let baseURL
   let pjson
   let error
+  let log = opts.quiet ? () => {} : console.log.bind(console)
   try {
     pjson = require(path.join(opts.dir || path.dirname(require.main.filename), 'package.json'))
   } catch (err) {
@@ -25,7 +26,7 @@ module.exports = (opts, cb) => {
   if (!opts.app) {
     let port = opts.port || 9111
     app.listen(port, () => {
-      console.log('chokidar-socket-emitter listening on ' + port)
+      log('chokidar-socket-emitter listening on ' + port)
       cb && cb()
     })
   }
@@ -42,7 +43,7 @@ module.exports = (opts, cb) => {
     ignored: ignoredPaths,
     ignoreInitial: true
   }, opts.chokidar)
-  console.log('chokidar watching ', path.resolve(pathToWatch))
+  log('chokidar watching ', path.resolve(pathToWatch))
   var watcher = chokidar.watch(pathToWatch, chokidarOpts).on('all', (event, onPath) => {
     let absolutePath = path.join(process.cwd(), onPath)
     if (opts.relativeTo) {
@@ -55,7 +56,7 @@ module.exports = (opts, cb) => {
     } else {
 
     }
-    console.log('File ', onPath, ' emitted: ' + event)
+    log('File ', onPath, ' emitted: ' + event)
     socketsConnected.forEach((socket) => {
       socket.emit(event, {path: onPath, absolutePath})
     })
@@ -67,7 +68,7 @@ module.exports = (opts, cb) => {
     })
 
     socket.on('identification', (name) => {
-      console.log('connected client: ' + name)
+      log('connected client: ' + name)
     })
     if (pjson) {
       socket.on('package.json', function (fn) {
@@ -82,7 +83,7 @@ module.exports = (opts, cb) => {
     watcher: watcher,
     close: (callback) => {
       watcher.close()
-      console.log('closing chokidar-socket-emitter')
+      log('closing chokidar-socket-emitter')
       socketsConnected.forEach((socket) => {
         socket.disconnect()
       })
