@@ -39,7 +39,7 @@ module.exports = (opts, cb) => {
     'node_modules/**',
     (baseURL ? baseURL + '/' : '') + 'jspm_packages/**',
     '.git/**'
-  ]
+  ].concat(opts.ignorePaths || [])
   let chokidarOpts = Object.assign({
     ignored: ignoredPaths,
     ignoreInitial: true

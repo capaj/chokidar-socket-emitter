@@ -51,6 +51,25 @@ describe('chokidar-socket-emitter', function () {
     })
   })
 
+  it('should expose watcher for manual event subscription', function (done) {
+    chokidarServer = chokidarEvEmitter({port: 7090}, done)
+  })
+
+  it('should respect ignored files', function (done) {
+    chokidarServer = chokidarEvEmitter({port: 7090, path: './test/test-folder', relativeTo: './test', ignorePaths: ['./test/test-folder']})
+    var socket = require('socket.io-client')('http://localhost:7090')
+    socket.on('change', function (data) {
+      expect(false).to.equal(true)
+      done()
+    })
+    setTimeout(() => {
+      fs.writeFile('./test/test-folder/labrat.txt', 'test1', (error) => {
+        expect(error).to.equal(null)
+        setTimeout(() => { done() }, 1000)
+      })
+    }, 300)
+  })
+
   afterEach(function (done) {
     setTimeout(() => {
       chokidarServer.close(done)
